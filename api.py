@@ -41,9 +41,9 @@ qa_pairs = {
 
 # Helper functions (adapted from main.py, no Streamlit)
 def desc_calc():
-    jar_path = r"D:\R and D Cursor\PaDEL-Descriptor\PaDEL-Descriptor.jar"
-    descriptor_file = r"D:\R and D Cursor\PaDEL-Descriptor\PubchemFingerprinter.xml"
-    output_dir = r"D:\R and D Cursor"
+    jar_path = 'D:/R and D Cursor/PaDEL-Descriptor/PaDEL-Descriptor.jar'
+    descriptor_file = 'D:/R and D Cursor/PaDEL-Descriptor/PubchemFingerprinter.xml'
+    output_dir = 'D:/R and D Cursor'
     bashCommand = f'java -Xms2G -Xmx2G -Djava.awt.headless=true -jar "{jar_path}" -removesalt -standardizenitro -fingerprints -descriptortypes "{descriptor_file}" -dir "{output_dir}" -file descriptors_output.csv'
     process = subprocess.Popen(bashCommand, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     output, error = process.communicate()
@@ -132,8 +132,8 @@ async def predict(model_name: str = Form(...), file: UploadFile = File(...)):
         f.write(await file.read())
     # Calculate descriptors
     desc_calc()
-    descriptors = pd.read_csv('D:\R and D Cursor\descriptors_output.csv')
-    descriptor_list = pd.read_csv('D:\R and D Cursor\descriptor_list.csv').columns.tolist()
+    descriptors = pd.read_csv('D:/R and D Cursor/descriptors_output.csv')
+    descriptor_list = pd.read_csv('D:/R and D Cursor/descriptor_list.csv').columns.tolist()
     subset_descriptors = descriptors[descriptor_list]
     model = load_model(model_name)
     predictions = model.predict(subset_descriptors)
@@ -176,9 +176,9 @@ async def model_comparison():
     dataset = pd.read_csv(dataset_url)
     X = dataset.drop(['pIC50'], axis=1)
     Y = dataset.iloc[:, -1]
-    if os.path.exists('D:\R and D Cursor\descriptor_list.csv'):
+    if os.path.exists('D:/R and D Cursor/descriptor_list.csv'):
         try:
-            descriptor_list = pd.read_csv('D:\R and D Cursor\descriptor_list.csv').columns.tolist()
+            descriptor_list = pd.read_csv('D:/R and D Cursor/descriptor_list.csv').columns.tolist()
             common = [c for c in descriptor_list if c in X.columns]
             if len(common) > 0:
                 X = X[common]
