@@ -165,7 +165,6 @@ async def get_3d_protein_ligand(pdb_code: str, smiles: str):
 @app.get("/model-comparison/")
 async def model_comparison():
     expected_models = [
-        "RandomForestRegressor",
         "GradientBoostingRegressor",
         "LinearRegression",
         "XGBoost",
